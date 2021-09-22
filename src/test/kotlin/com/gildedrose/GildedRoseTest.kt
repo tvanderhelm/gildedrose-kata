@@ -5,34 +5,44 @@ import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
 
+    val SELL_IN_CHANGE_PER_UPDATE = -1
+    val QUALITY_CHANGE_PER_UPDATE = -1
+    val QUALITY_CHANGE_DOUBLED_PER_UPDATE = -2
+
+    val POSITIVE_QUALITY_AMOUNT = 10
+    val POSITIVE_SELL_IN_VALUE = 5
+    val LOW_POSITIVE_QUALITY_AMOUNT = 1
+    val NEGATIVE_SELL_IN_AMOUNT = -1
+    val MINIMUM_QUALITY_AMOUNT = 0
+
     @Test
     fun `Item on update lowered sellIn and quality by one`() {
-        val items = arrayOf<Item>(Item("foo", 5, 10))
+        val items = arrayOf(Item("foo", POSITIVE_SELL_IN_VALUE, POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
-        assertEquals(4, app.items[0].sellIn)
-        assertEquals(9, app.items[0].quality)
+        assertEquals(POSITIVE_SELL_IN_VALUE + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
+        assertEquals(POSITIVE_QUALITY_AMOUNT + QUALITY_CHANGE_PER_UPDATE, app.items[0].quality)
     }
 
     @Test
     fun `Item sellIn date is passed on update quality lowered by two`() {
-        val items = arrayOf<Item>(Item("foo", -1, 10))
+        val items = arrayOf(Item("foo", NEGATIVE_SELL_IN_AMOUNT, POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
-        assertEquals(-2, app.items[0].sellIn)
-        assertEquals(8, app.items[0].quality)
+        assertEquals(NEGATIVE_SELL_IN_AMOUNT + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
+        assertEquals(POSITIVE_QUALITY_AMOUNT + QUALITY_CHANGE_DOUBLED_PER_UPDATE, app.items[0].quality)
     }
 
     @Test
     fun `Item quality cant get negative`() {
-        val items = arrayOf<Item>(Item("foo", 10, 1))
+        val items = arrayOf(Item("foo", POSITIVE_SELL_IN_VALUE, LOW_POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
-        assertEquals(9, app.items[0].sellIn)
-        assertEquals(0, app.items[0].quality)
+        assertEquals(POSITIVE_SELL_IN_VALUE + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
+        assertEquals(MINIMUM_QUALITY_AMOUNT, app.items[0].quality)
         app.updateQuality()
-        assertEquals(8, app.items[0].sellIn)
-        assertEquals(0, app.items[0].quality)
+        assertEquals(POSITIVE_SELL_IN_VALUE + (SELL_IN_CHANGE_PER_UPDATE * 2), app.items[0].sellIn)
+        assertEquals(MINIMUM_QUALITY_AMOUNT, app.items[0].quality)
     }
 
 

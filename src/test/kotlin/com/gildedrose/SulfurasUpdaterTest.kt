@@ -1,25 +1,32 @@
 package com.gildedrose
 
+import com.gildedrose.updaters.SulfurasUpdater
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class SulfurasUpdaterTest {
 
+    val SULFURAS = "Sulfuras, Hand of Ragnaros"
+
+    val POSITIVE_QUALITY_AMOUNT = 10
+    val POSITIVE_SELL_IN_VALUE = 5
+    val MAX_QUALITY_AMOUNT = 80
+
     @Test
     fun `Sulfuras on update dont update sellIn or quality`() {
-        val items = arrayOf(Item(GildedRose.SULFURAS, 5, 10))
-        val app = GildedRose(items)
-        app.updateQuality()
-        Assertions.assertEquals(5, app.items[0].sellIn)
-        Assertions.assertEquals(10, app.items[0].quality)
+        val item = Item(SULFURAS, POSITIVE_SELL_IN_VALUE, POSITIVE_QUALITY_AMOUNT)
+        val updater = SulfurasUpdater(item)
+        updater.onUpdate()
+        Assertions.assertEquals(POSITIVE_SELL_IN_VALUE, item.sellIn)
+        Assertions.assertEquals(POSITIVE_QUALITY_AMOUNT, item.quality)
     }
 
     @Test
     fun `Sulfuras quality could up to 80`() {
-        val items = arrayOf(Item(GildedRose.SULFURAS, 5, 80))
-        val app = GildedRose(items)
-        app.updateQuality()
-        Assertions.assertEquals(5, app.items[0].sellIn)
-        Assertions.assertEquals(80, app.items[0].quality)
+        val item = Item(SULFURAS, POSITIVE_SELL_IN_VALUE, MAX_QUALITY_AMOUNT)
+        val updater = SulfurasUpdater(item)
+        updater.onUpdate()
+        Assertions.assertEquals(POSITIVE_SELL_IN_VALUE, item.sellIn)
+        Assertions.assertEquals(MAX_QUALITY_AMOUNT, item.quality)
     }
 }

@@ -4,12 +4,11 @@ import com.gildedrose.updaters.*
 
 class GildedRose(var items: Array<Item>) {
 
-    companion object {
-        const val AGED_BRIE = "Aged Brie"
-        const val SULFURAS = "Sulfuras, Hand of Ragnaros"
-        const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
-        const val CONJURED = "Conjured Mana Cake"
-    }
+    val AGED_BRIE = "Aged Brie"
+    val SULFURAS = "Sulfuras, Hand of Ragnaros"
+    val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
+    val CONJURED = "Conjured Mana Cake"
+
 
     /**
      * Updates quality value and sellIn value for the given items.
