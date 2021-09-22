@@ -15,9 +15,11 @@ internal class GildedRoseTest {
     val NEGATIVE_SELL_IN_AMOUNT = -1
     val MINIMUM_QUALITY_AMOUNT = 0
 
+    val DEFAULT_ITEM_NAME = "foo"
+
     @Test
     fun `Item on update lowered sellIn and quality by one`() {
-        val items = arrayOf(Item("foo", POSITIVE_SELL_IN_VALUE, POSITIVE_QUALITY_AMOUNT))
+        val items = arrayOf(Item(DEFAULT_ITEM_NAME, POSITIVE_SELL_IN_VALUE, POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
         assertEquals(POSITIVE_SELL_IN_VALUE + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
@@ -26,7 +28,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Item sellIn date is passed on update quality lowered by two`() {
-        val items = arrayOf(Item("foo", NEGATIVE_SELL_IN_AMOUNT, POSITIVE_QUALITY_AMOUNT))
+        val items = arrayOf(Item(DEFAULT_ITEM_NAME, NEGATIVE_SELL_IN_AMOUNT, POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
         assertEquals(NEGATIVE_SELL_IN_AMOUNT + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
@@ -35,7 +37,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `Item quality cant get negative`() {
-        val items = arrayOf(Item("foo", POSITIVE_SELL_IN_VALUE, LOW_POSITIVE_QUALITY_AMOUNT))
+        val items = arrayOf(Item(DEFAULT_ITEM_NAME, POSITIVE_SELL_IN_VALUE, LOW_POSITIVE_QUALITY_AMOUNT))
         val app = GildedRose(items)
         app.updateQuality()
         assertEquals(POSITIVE_SELL_IN_VALUE + SELL_IN_CHANGE_PER_UPDATE, app.items[0].sellIn)
